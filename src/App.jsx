@@ -8,8 +8,17 @@ function App() {
 
   return (
     <div className="app">
+      <div className="bg-blobs" aria-hidden="true">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
+      </div>
+
       <header className="app-header">
-        <h1>Toolbox</h1>
+        <h1>
+          <span className="title-icon">🧰</span>
+          Toolbox
+        </h1>
         <p className="subtitle">Stopwatch & Calculator</p>
       </header>
 
