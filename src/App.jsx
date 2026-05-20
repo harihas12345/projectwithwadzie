@@ -60,7 +60,7 @@ function App() {
         </button>
       </nav>
 
-      <main className="tab-content" role="tabpanel">
+      <main className="tab-content" role="tabpanel" key={activeTab}>
         {activeTab === 'stopwatch' ? <Stopwatch /> : <Calculator />}
       </main>
 

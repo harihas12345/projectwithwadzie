@@ -4,6 +4,19 @@
     align-items: center;
     gap: 32px;
     padding: 40px 20px;
+    animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .stopwatch-display {
@@ -17,6 +30,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
 }
 
 .ring-svg {
@@ -31,6 +57,7 @@
     fill: none;
     stroke: var(--border);
     stroke-width: 4;
+    transition: stroke 0.3s ease;
 }
 
 .ring-progress {
@@ -39,7 +66,20 @@
     stroke-width: 4;
     stroke-linecap: round;
     transition: stroke-dasharray 0.1s linear;
-    filter: drop-shadow(0 0 6px var(--accent));
+    filter: drop-shadow(0 0 8px var(--accent));
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 6px var(--accent));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 14px var(--accent));
+    }
 }
 
 .time-digits {
@@ -51,11 +91,25 @@
     font-weight: 600;
     color: var(--text-h);
     letter-spacing: -1px;
+    transition: transform 0.1s ease;
 }
 
 .separator {
     opacity: 0.5;
     font-weight: 300;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
 }
 
 .centis {
@@ -66,6 +120,19 @@
 .stopwatch-controls {
     display: flex;
     gap: 12px;
+    animation: fadeUp 0.4s ease-out 0.2s both;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .btn {
@@ -79,12 +146,35 @@
     font-weight: 500;
     font-family: var(--sans);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn:hover::after {
+    opacity: 1;
+}
+
+.btn:active {
+    transform: scale(0.94) !important;
 }
 
 .btn:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+}
+
+.btn:disabled::after {
+    display: none;
 }
 
 .btn-start {
@@ -94,19 +184,32 @@
 }
 
 .btn-start:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
 }
 
 .btn-stop {
     background: linear-gradient(135deg, #ef4444, #dc2626);
     color: white;
     box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    animation: attentionPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes attentionPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 4px 25px rgba(239, 68, 68, 0.5);
+    }
 }
 
 .btn-stop:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.5);
 }
 
 .btn-lap {
@@ -116,8 +219,8 @@
 }
 
 .btn-lap:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(170, 59, 255, 0.2);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 18px rgba(170, 59, 255, 0.25);
 }
 
 .btn-reset {
@@ -127,13 +230,14 @@
 }
 
 .btn-reset:hover:not(:disabled) {
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.05);
     box-shadow: var(--shadow);
 }
 
 .laps-container {
     width: 100%;
     max-width: 360px;
+    animation: fadeUp 0.4s ease-out;
 }
 
 .laps-container h3 {
@@ -152,6 +256,7 @@
     overflow-y: auto;
     border-radius: 12px;
     border: 1px solid var(--border);
+    backdrop-filter: blur(6px);
 }
 
 .lap-item {
@@ -161,7 +266,12 @@
     border-bottom: 1px solid var(--border);
     font-family: var(--mono);
     font-size: 14px;
-    animation: slideIn 0.2s ease;
+    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background 0.2s ease;
+}
+
+.lap-item:hover {
+    background: var(--accent-bg);
 }
 
 .lap-item:last-child {
@@ -180,12 +290,12 @@
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(-8px);
+        transform: translateX(-20px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(0);
     }
 }
 
